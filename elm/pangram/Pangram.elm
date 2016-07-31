@@ -1,21 +1,20 @@
 module Pangram exposing (..)
 
 import String
-import Set exposing (Set)
+import List
 
-alphabet : Set Char
+alphabet : List Char
 alphabet =
-  toSet "abcdefghijklmnopqrstuvwxyz"
+  String.toList "abcdefghijklmnopqrstuvwxyz"
 
 isPangram : String -> Bool
 isPangram sentence =
-  sentence
-    |> String.toLower
-    |> toSet
-    |> Set.diff alphabet
-    |> Set.isEmpty
+  List.all (normalise sentence |> isMember) alphabet
 
+normalise : String -> List Char
+normalise str =
+  str |> String.toLower |> String.toList
 
-toSet : String -> Set Char
-toSet str =
-  str |> String.toList |> Set.fromList
+isMember : List Char -> Char -> Bool
+isMember = 
+  flip List.member
