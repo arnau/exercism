@@ -12,30 +12,31 @@ type Planet
 
 ageOn : Planet -> Float -> Float
 ageOn planet seconds =
+  seconds / (31557600 * (factorFor planet))
+
+factorFor : Planet -> Float
+factorFor planet =
   case planet of
     Earth ->
-      toYears seconds 1
+      1
 
     Jupiter ->
-      toYears seconds 11.862615
+      11.862615
 
     Mars ->
-      toYears seconds 1.8808158
+      1.8808158
 
     Mercury ->
-      toYears seconds 0.2408467
+      0.2408467
 
     Neptune ->
-      toYears seconds 164.79132
+      164.79132
 
     Saturn ->
-      toYears seconds 29.447498
+      29.447498
 
     Uranus ->
-      toYears seconds 84.016846
+      84.016846
 
     Venus ->
-      toYears seconds 0.61519726
-
-toYears seconds factor =
-  seconds / (31557600 * factor)
+      0.61519726
