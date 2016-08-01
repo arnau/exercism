@@ -6,15 +6,11 @@ discard f xs =
 
 keep : (a -> Bool) -> List a -> List a
 keep f xs =
-  test f (xs, [])
+  case xs of
+    [] -> []
 
-test : (a -> Bool) -> (List a, List a) -> List a
-test f (xs, xs') =
-  case (xs, xs') of
-    ([], []) -> []
-
-    ([], xs') ->
-      List.reverse xs'
-
-    (x::xs, xs') ->
-      test f (xs, if f x then x::xs' else xs')
+    x :: xs ->
+      if f x then
+        x :: keep f xs
+      else
+        keep f xs
