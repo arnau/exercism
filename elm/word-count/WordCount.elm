@@ -2,6 +2,7 @@ module WordCount exposing (..)
 
 import String
 import Dict exposing (Dict)
+import Char
 
 
 wordCount : String -> Dict String Int
@@ -24,19 +25,6 @@ count word hash =
 isAlphanumeric : String -> Maybe String
 isAlphanumeric word =
   if word == word then
-    Just (word
-           |> String.toList
-           |> List.filterMap removeAnomalies
-           |> String.fromList)
+    Just (String.filter (\c -> Char.isLower c || Char.isDigit c) word)
   else
     Nothing
-
-
-removeAnomalies char =
-  if List.member char allowedChars  then
-    Just char
-  else
-    Nothing
-
-allowedChars =
-  String.toList "abcdefghijklmnopqrstuvwxyz0123456789"
