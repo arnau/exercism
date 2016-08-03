@@ -7,13 +7,11 @@ distance xs ys =
   if String.length xs /= String.length ys then
     Nothing
   else
-    Just <| countDifferences <| zip (String.toList xs) (String.toList ys)
-
-zip : List a -> List a -> List (a, a)
-zip xs ys =
-  List.map2 (\x y -> (x, y)) xs ys
+    Just
+      <| countDifferences
+      <| List.map2 (\x y -> x /= y) (String.toList xs) (String.toList ys)
 
 
-countDifferences : List (a, a) -> Int
+countDifferences : List Bool -> Int
 countDifferences =
-  List.length << List.filter (\(x, y) -> x /= y)
+  List.length << List.filter identity
