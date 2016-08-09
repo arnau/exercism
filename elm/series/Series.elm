@@ -11,16 +11,15 @@ slices n string =
       |> String.split ""
       |> List.map String.toInt
       |> combineResult
-      |> Result.map (sliceBy n [])
-      |> Result.map List.reverse
+      |> Result.map (sliceBy n)
 
 
-sliceBy : Int -> List (List Int) -> List Int -> List (List Int)
-sliceBy n ys xs =
+sliceBy : Int -> List Int -> List (List Int)
+sliceBy n xs =
   if n > List.length xs then
-    ys
+    []
   else
-    sliceBy n ((List.take n xs) :: ys) (List.drop 1 xs)
+    (List.take n xs) :: sliceBy n (List.drop 1 xs)
 
 
 combineResult : List (Result x a) -> Result x (List a)
