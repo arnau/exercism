@@ -2,16 +2,16 @@ module Allergies exposing (..)
 
 import Bitwise
 
-allergens : List (String, Int)
+allergens : List String
 allergens =
-  [ ("eggs", 1)
-  , ("peanuts", 2)
-  , ("shellfish", 4)
-  , ("strawberries", 8)
-  , ("tomatoes", 16)
-  , ("chocolate", 32)
-  , ("pollen", 64)
-  , ("cats", 128)
+  [ "eggs"
+  , "peanuts"
+  , "shellfish"
+  , "strawberries"
+  , "tomatoes"
+  , "chocolate"
+  , "pollen"
+  , "cats"
   ]
 
 
@@ -22,12 +22,12 @@ isAllergicTo allergen score =
 
 toList : Int -> List String
 toList score =
-  List.filterMap (byScore score) allergens
+  List.filterMap (byScore score) (List.indexedMap (,) allergens)
 
 
-byScore : Int -> (String, Int) -> Maybe String
-byScore n (allergen, score) =
-  if (Bitwise.and n score) /= 0 then
+byScore : Int -> (Int, String) -> Maybe String
+byScore n (index, allergen) =
+  if (Bitwise.and n (2 ^ index)) /= 0 then
     Just allergen
   else
     Nothing
