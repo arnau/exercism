@@ -4,16 +4,25 @@ import Char
 import String
 
 getNumber : String -> Maybe String
-getNumber input =
-  let clean = String.filter Char.isDigit input
-      length = String.length clean
-  in
-    if length == 10 then
-      Just clean
-    else if length == 11 && String.startsWith "1" clean then
-      Just (String.dropLeft 1 clean)
-    else
-      Nothing
+getNumber number =
+  number
+    |> String.filter Char.isDigit number
+    |> withLength
+    |> validate
+
+
+withLength : String -> (String, Int)
+withLength number =
+  (number, String.length number)
+
+
+validate (number, length) =
+  if length == 10 then
+    Just number
+  else if length == 11 && String.startsWith "1" number then
+    Just (String.dropLeft 1 number)
+  else
+    Nothing
 
 
 prettyPrint : String -> Maybe String
