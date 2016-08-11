@@ -46,7 +46,7 @@ foldr fn b xs =
 
 append : List a -> List a -> List a
 append xs ys =
-  foldr (\x acc -> x :: acc) ys xs
+  foldr (::) ys xs
 
 
 concat : List (List a) -> List a
