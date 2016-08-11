@@ -7,7 +7,7 @@ length xs =
 
 reverse : List a -> List a
 reverse xs =
-  foldl (\x acc -> x :: acc) [] xs
+  foldl (::) [] xs
 
 
 map : (a -> b) -> List a -> List b
