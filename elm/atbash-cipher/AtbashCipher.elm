@@ -3,19 +3,6 @@ module AtbashCipher exposing (..)
 import Char
 import String
 
-plain = String.toList "abcdefghijklmnopqrstuvwxyz1234567890"
-cipher = String.toList "zyxwvutsrqponmlkjihgfedcba1234567890"
-
-
-zip : List a -> List b -> List (a, b)
-zip xs ys =
-  List.map2 (,) xs ys
-
-
-codex : List (Char, Char)
-codex =
-  zip plain cipher
-
 
 encode : String -> String
 encode str =
@@ -25,6 +12,12 @@ encode str =
     |> String.map translate
     |> groupBy 5
     |> String.trim
+
+
+decode str =
+  str
+    |> String.filter isAlphaNum
+    |> String.map translate
 
 
 isAlphaNum : Char -> Bool
@@ -44,21 +37,8 @@ groupBy n xs =
 
 translate : Char -> Char
 translate char =
-  List.filter (\(plain, _) -> char == plain) codex
-    |> takeCipher
+  if Char.isDigit char then
+    char
+  else
+    Char.fromCode ((Char.toCode 'a') + (Char.toCode 'z') - Char.toCode char)
 
-
-takeCipher : List (Char, Char) -> Char
-takeCipher xs =
-  case xs of
-    [] ->
-      '-'
-
-    x :: xs ->
-      snd x
-
-
-decode str =
-  str
-    |> String.filter isAlphaNum
-    |> String.map translate
